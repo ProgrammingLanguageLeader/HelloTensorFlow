@@ -1,6 +1,5 @@
-import os
-
 import numpy as np
+import tensorflow as tf
 from keras.models import Sequential
 from keras.layers import Dense
 
@@ -28,8 +27,8 @@ def get_samples_data(
 
 
 if __name__ == '__main__':
-    # changing TensorFlow logging level
-    os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
+    tf_old_logger = tf.logging.get_verbosity()
+    tf.logging.set_verbosity(tf.logging.ERROR)
 
     logr = Sequential()
     logr.add(
@@ -52,3 +51,5 @@ if __name__ == '__main__':
         verbose=1,
         validation_data=(x_test, y_test)
     )
+
+    tf.logging.set_verbosity(tf_old_logger)
